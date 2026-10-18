@@ -15,6 +15,28 @@ const SPRITES_ITEMS = {
 };
 const ORDEN_ITEMS = ['botas', 'espada', 'reloj', 'orbe', 'pocion'];
 
+// Recordatorio de controles y objetos, compartido por la pantalla de inicio y la pausa.
+const HTML_AYUDA = `
+    <div class="ayuda">
+        <h2>Controles</h2>
+        <ul>
+            <li><b>W A S D</b> &mdash; moverse</li>
+            <li><b>Shift</b> &mdash; caminar despacio</li>
+            <li><b>Clic izquierdo</b> &mdash; espada</li>
+            <li><b>Clic derecho</b> &mdash; bola de fuego</li>
+            <li><b>Esc</b> &mdash; pausa</li>
+        </ul>
+        <h2>Objetos</h2>
+        <ul>
+            <li><b>Botas</b> &mdash; más velocidad de movimiento</li>
+            <li><b>Reloj</b> &mdash; ataques más rápidos</li>
+            <li><b>Espada</b> &mdash; más daño de espada</li>
+            <li><b>Orbe</b> &mdash; mejor ataque de fuego</li>
+            <li><b>Poción</b> &mdash; más vida máxima</li>
+        </ul>
+    </div>
+`;
+
 export function crearHUD(acciones = {}) {
     // --- Barras y cooldowns ---
     const hud = document.createElement('div');
@@ -29,12 +51,26 @@ export function crearHUD(acciones = {}) {
     `;
     document.body.appendChild(hud);
 
+    // --- Pantalla de inicio (visible al cargar) ---
+    const menuInicio = document.createElement('div');
+    menuInicio.className = 'menu';
+    menuInicio.innerHTML = `
+        <div class="menu-panel menu-panel-ayuda">
+            <h1>EMBER CRAWLER</h1>
+            ${HTML_AYUDA}
+            <button id="btn-empezar">EMPEZAR</button>
+        </div>
+    `;
+    menuInicio.style.display = 'flex';
+    document.body.appendChild(menuInicio);
+
     // --- Menú de pausa ---
     const menuPausa = document.createElement('div');
     menuPausa.className = 'menu';
     menuPausa.innerHTML = `
-        <div class="menu-panel">
+        <div class="menu-panel menu-panel-ayuda">
             <h1>Pausa</h1>
+            ${HTML_AYUDA}
             <button id="btn-reanudar">Reanudar</button>
             <button id="btn-terminar">Terminar</button>
         </div>
@@ -113,6 +149,7 @@ export function crearHUD(acciones = {}) {
         cdEspada:  hud.querySelector('#cd-espada .hud-cd-sweep'),
         cdFuego:   hud.querySelector('#cd-fuego .hud-cd-sweep'),
         items:     itemRefs,
+        menuInicio,
         menuPausa,
         menuFin,
         finKills:  menuFin.querySelector('#fin-kills'),
@@ -121,6 +158,7 @@ export function crearHUD(acciones = {}) {
     };
 
     // Botones: cada uno dispara la acción que le pase main.js.
+    menuInicio.querySelector('#btn-empezar').addEventListener('click', () => acciones.onEmpezar?.());
     menuPausa.querySelector('#btn-reanudar').addEventListener('click', () => acciones.onReanudar?.());
     menuPausa.querySelector('#btn-terminar').addEventListener('click', () => acciones.onTerminar?.());
     menuFin.querySelector('#btn-volver').addEventListener('click', () => acciones.onVolverAJugar?.());
@@ -164,6 +202,8 @@ export function actualizarNivel(n) {
 // Fundido a negro de la transición (la transición CSS es de 0.6 s).
 export function mostrarFundido() { if (refs && refs.fundido) refs.fundido.style.opacity = '1'; }
 export function ocultarFundido() { if (refs && refs.fundido) refs.fundido.style.opacity = '0'; }
+
+export function ocultarInicio() { if (refs && refs.menuInicio) refs.menuInicio.style.display = 'none'; }
 
 export function mostrarPausa() { if (refs) refs.menuPausa.style.display = 'flex'; }
 export function ocultarPausa() { if (refs) refs.menuPausa.style.display = 'none'; }

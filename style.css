@@ -71,7 +71,7 @@ body {
     display: none;               /* oculto por defecto; hud.js lo pone a 'flex' */
     position: fixed;
     inset: 0;
-    z-index: 20;
+    z-index: 15000;              /* por encima del HUD (barras, nivel, puntuación) */
     background: rgba(0, 0, 0, 0.6);
     color: #fff;
     font-family: sans-serif;
@@ -87,6 +87,20 @@ body {
     min-width: 260px;
 }
 .menu-panel h1 { margin-bottom: 16px; }
+
+/* Panel con el recordatorio de controles/objetos (inicio y pausa) */
+.menu-panel-ayuda { max-width: 440px; }
+.ayuda { text-align: left; margin: 4px 0 10px; }
+.ayuda h2 {
+    font-size: 15px;
+    margin: 12px 0 6px;
+    color: #ffe08a;
+    border-bottom: 1px solid #444;
+    padding-bottom: 3px;
+}
+.ayuda ul { list-style: none; }
+.ayuda li { font-size: 14px; line-height: 1.6; color: #ddd; }
+.ayuda li b { color: #fff; }
 .menu-panel p { margin: 6px 0; font-size: 18px; }
 .menu-panel button {
     display: block;

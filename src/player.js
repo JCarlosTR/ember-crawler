@@ -142,10 +142,11 @@ export class Player {
         if (keys['KeyW']) mov += 1;   // adelante
         if (keys['KeyS']) mov -= 1;   // atrás
 
-        // Sprint con Shift y penalización de maleza; velocidad solo de este frame.
-        const corriendo = keys['ShiftLeft'] || keys['ShiftRight'];
+        // Por defecto se corre; Shift camina despacio (para maniobrar con cuidado).
+        // La penalización de maleza se aplica aparte; velocidad solo de este frame.
+        const lento = keys['ShiftLeft'] || keys['ShiftRight'];
         const factorMaleza = factorVelocidad(this.mesh.position.x, this.mesh.position.z);
-        const velocidad = this.velocidad * (corriendo ? 4 : 1) * factorMaleza;
+        const velocidad = this.velocidad * (lento ? 1 : 4) * factorMaleza;
 
         // Frente del muñeco (-Z local) según rotation.y.
         const rot = this.mesh.rotation.y;

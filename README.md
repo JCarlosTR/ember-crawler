@@ -14,7 +14,7 @@ Versión online (GitHub Pages): https://USUARIO.github.io/ember-crawler/
 
 - **W / S**: avanzar / retroceder
 - **A / D**: girar
-- **Shift**: correr
+- **Shift**: caminar despacio (por defecto se corre)
 - **Clic izquierdo**: espada (cono frontal)
 - **Clic derecho**: bola de fuego (gasta maná)
 - **Esc**: pausa

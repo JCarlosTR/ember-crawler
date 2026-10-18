@@ -6,7 +6,7 @@ import { Treasure } from './treasure.js';
 import { Tree, crearMallaTroncos } from './tree.js';
 import { Maleza } from './maleza.js';
 import { asignarBarraSalud, actualizarBarraSalud } from './healthBar.js';
-import { crearHUD, actualizarHUD, mostrarPausa, ocultarPausa, mostrarFinPartida, actualizarItems, actualizarScore, actualizarNivel, mostrarFundido, ocultarFundido } from './hud.js';
+import { crearHUD, actualizarHUD, mostrarPausa, ocultarPausa, mostrarFinPartida, actualizarItems, actualizarScore, actualizarNivel, mostrarFundido, ocultarFundido, ocultarInicio } from './hud.js';
 import { TWEEN } from '../lib/tween.module.min.js';
 import { Item } from './item.js';
 import { Rock } from './rock.js';
@@ -28,6 +28,7 @@ let vectorItems = [];      // items recogibles
 let efectos = [];          // partículas temporales
 let pausado = false;       // menú de pausa abierto
 let gameOver = false;      // partida terminada
+let juegoIniciado = false; // false hasta pulsar EMPEZAR en la pantalla de inicio
 let killCounter = 0;       // enemigos eliminados en la partida
 let treasureCounter = 0;   // cofres conseguidos
 let treasure;              // cofre actual
@@ -112,6 +113,7 @@ function init() {
 
     // HUD 2D con las acciones de los botones.
     crearHUD({
+        onEmpezar:      () => { juegoIniciado = true; ocultarInicio(); },
         onReanudar:     () => togglePausa(),
         onTerminar:     () => finDePartida(),
         onVolverAJugar: () => location.reload(),   // recarga la página
@@ -660,7 +662,7 @@ function posicionarCamara(dt) {
 
 function update() {
     const dt = clock.getDelta();   // se consume aunque estemos en pausa (dt no se dispara al reanudar)
-    if (pausado || gameOver) return;   // congela la lógica; el render sigue
+    if (!juegoIniciado || pausado || gameOver) return;   // congela la lógica; el render sigue
 
     actualizarEfectos(dt);   // partículas (también durante la transición)
 
