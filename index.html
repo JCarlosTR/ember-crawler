@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ember Crawler</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!--
+      Importmap: resuelve el especificador 'three' a la copia local r140.
+      Los addons (OrbitControls.module.js) importan de 'three', así que
+      con mapear 'three' es suficiente. Debe ir ANTES del primer <script type="module">.
+    -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./lib/three.module.js"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Contenedor del canvas -->
+    <div id="container"></div>
+
+    <!-- El HUD y los menús se montarán como overlay HTML (ver src/hud.js) -->
+
+    <!-- Punto de entrada. Con type="module" el orden de carga lo resuelven los import. -->
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: #000;
+    overflow: hidden;
+}
+
+#container {
+    position: fixed;
+    inset: 0;
+}
+
+/* --- HUD (overlay 2D, lo monta src/hud.js) --- */
+.hud {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 10;
+    font-family: sans-serif;
+    user-select: none;
+}
+
+.hud-barra {
+    position: relative;    /* para colocar el número encima, centrado */
+    width: 220px;
+    height: 18px;
+    border: 2px solid #000;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    overflow: hidden;      /* recorta el relleno cuando encoge */
+}
+
+/* Número (vida/maná actual) centrado sobre la barra, por encima del relleno */
+.hud-texto {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: bold 12px sans-serif;
+    color: #fff;
+    text-shadow: 0 0 3px #000, 0 1px 2px #000;
+    z-index: 2;
+    pointer-events: none;
+}
+.hud-vida { background: #300; }   /* vida perdida (fondo oscuro) */
+.hud-mana { background: #012; }
+
+.hud-relleno { height: 100%; width: 100%; }   /* el ancho lo cambia hud.js */
+.hud-vida .hud-relleno { background: #00c000; }
+.hud-mana .hud-relleno { background: #1e78ff; }
+
+.hud-habilidades { display: flex; gap: 8px; margin-top: 8px; }
+.hud-cd {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: #222;
+    border: 2px solid #000;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+/* Sobre este overlay va el conic-gradient del cooldown (lo pinta hud.js). */
+.hud-cd-sweep { position: absolute; inset: 0; border-radius: 4px; pointer-events: none; }
+
+/* --- Menús (pausa y fin de partida), overlay a pantalla completa --- */
+.menu {
+    display: none;               /* oculto por defecto; hud.js lo pone a 'flex' */
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-family: sans-serif;
+    align-items: center;
+    justify-content: center;
+}
+.menu-panel {
+    background: #1a1a1a;
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 24px 40px;
+    text-align: center;
+    min-width: 260px;
+}
+.menu-panel h1 { margin-bottom: 16px; }
+.menu-panel p { margin: 6px 0; font-size: 18px; }
+.menu-panel button {
+    display: block;
+    width: 200px;
+    margin: 10px auto 0;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* "Volver a jugar": centrado horizontal, a ~27% de la parte inferior. */
+.btn-volver {
+    position: absolute;
+    bottom: 27%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    padding: 12px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
